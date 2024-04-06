@@ -13,4 +13,10 @@ class User < ApplicationRecord
   has_one :customer
   has_one :seller
   
+  enum user_type:{
+    admin: 0,
+    seller: 1,
+    customer: 2
+  }
+
 end
