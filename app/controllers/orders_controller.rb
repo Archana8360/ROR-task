@@ -4,7 +4,9 @@ class OrdersController < ApplicationController
     # GET /orders
     # GET /orders.json
     def index
-      @orders = policy_scope(Order)
+      @orders = policy_scope(Order).order(created_at: :desc).page(params[:page]).per(10) # Apply policy scope and pagination
+      @top_5_orders = policy_scope(Order).order(amount: :desc).limit(5) # Apply policy scope and fetch top 5 orders
+      authorize @orders 
     end
   
     # GET /orders/1

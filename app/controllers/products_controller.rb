@@ -4,7 +4,8 @@ class ProductsController < ApplicationController
     # GET /products
     # GET /products.json
     def index
-      @products = Product.all
+      @products = Product.order(:name).page(params[:page]).per(10) # Pagination with 10 items per page
+      @top_5_products = Product.order(amount: :desc).limit(5) # Fetch top 5 products based on 'amount' attribute
     end
   
     # GET /products/1
