@@ -1,24 +1,91 @@
-# README
+# ROR TASK
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Local Development Setup
 
-Things you may want to cover:
+### Prerequisites
 
-* Ruby version
+- Ruby (version 3.2.1)
+- Rails (version 7.0.8)
+- PostgreSQL (version  1.1)
+- Redis (version 4.0) - Required only if using Sidekiq for background jobs
 
-* System dependencies
+### Installation
 
-* Configuration
+1. **Clone the repository:**
 
-* Database creation
+    ```bash
+    git clone https://github.com/Archana8360/ROR-task.git
+    ```
 
-* Database initialization
+2. **Install gem dependencies:**
 
-* How to run the test suite
+    ```bash
+    bundle install
+    ```
 
-* Services (job queues, cache servers, search engines, etc.)
+3. **Database setup:**
 
-* Deployment instructions
+    - Make sure PostgreSQL is running.
+    - Create the database:
 
-* ...
+        ```bash
+        rails db:create
+        ```
+
+    - Run database migrations:
+
+        ```bash
+        rails db:migrate
+        ```
+
+    - *(Optional)* Seed the database with sample data:
+
+        ```bash
+        rails db:seed
+        ```
+
+4. **Redis setup (for Sidekiq background jobs):**
+
+    - Install Redis (if not already installed).
+    - Start Redis server:
+
+        ```bash
+        redis-server
+        ```
+
+### Environment Variables
+
+- Copy the example environment variables file:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+- Update the `.env` file with your environment-specific values.
+
+### Running the Application
+
+1. **Start the Rails server:**
+
+    ```bash
+    rails server
+    ```
+
+2. **Access the application in your web browser at `http://localhost:3000`.**
+
+### Running Sidekiq (Optional, for background jobs)
+
+1. **Start the Sidekiq process:**
+
+    ```bash
+    bundle exec sidekiq
+    ```
+
+### Testing
+
+- **Run tests:**
+
+    ```bash
+    rails test
+    ```
+
