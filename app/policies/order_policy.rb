@@ -1,5 +1,6 @@
 class OrderPolicy < ApplicationPolicy
     def index?
+      
       user.admin? || user.seller?  # Only admins and sellers can see all orders
     end
   

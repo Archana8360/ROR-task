@@ -10,10 +10,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
 
     if resource.persisted?
-      if resource.user_type == 'seller'
+      debugger
+      if resource.user_type == "seller"
         create_seller(sign_up_params, resource)
 
-      elsif resource.user_type == 'customer'
+      elsif resource.user_type == "customer"
         create_customer(sign_up_params,resource)
       end
         sign_up(resource_name, resource)

@@ -188,6 +188,10 @@ GEM
       thor (~> 1.0)
       zeitwerk (~> 2.5)
     rake (13.2.1)
+    ransack (4.1.1)
+      activerecord (>= 6.1.5)
+      activesupport (>= 6.1.5)
+      i18n
     rdoc (6.6.3.1)
       psych (>= 4.0.0)
     redis (4.8.1)
@@ -240,6 +244,7 @@ DEPENDENCIES
   pundit
   rack-cors
   rails (~> 7.0.8, >= 7.0.8.1)
+  ransack
   redis (~> 4.0)
   roo (~> 2.10.0)
   sidekiq (~> 7.1, >= 7.1.2)

@@ -2,17 +2,23 @@ class OrdersController < ApplicationController
     before_action :set_order, only: %i[show edit update destroy]
 
     # GET /orders
-    # GET /orders.json
     def index
-      @orders = policy_scope(Order).order(created_at: :desc).page(params[:page]).per(10) # Apply policy scope and pagination
-      @top_5_orders = policy_scope(Order).order(amount: :desc).limit(5) # Apply policy scope and fetch top 5 orders
-      authorize @orders 
+      if params[:page].present?
+        @orders = Order.order(created_at: :desc).page(params[:page]).per(10) # Apply policy scope and pagination
+        authorize @orders
+        render json: { status: :ok, data: @orders }
+      else
+        @top_5_orders = Order.order(amount: :desc).limit(5)
+        authorize @top_5_orders
+        render json: { status: :ok, data: @top_5_orders }
+      end
     end
+    
   
-    # GET /orders/1
     # GET /orders/1.json
     def show
       authorize @order
+      render json: { status: :ok, data: @order }
     end
   
     # GET /orders/new
@@ -29,42 +35,34 @@ class OrdersController < ApplicationController
     def create
       @order = Order.new(order_params)
       authorize @order
-      respond_to do |format|
-        if @order.save
-          format.html { redirect_to @order, notice: 'Order was successfully created.' }
-          format.json { render :show, status: :created, location: @order }
-        else
-          format.html { render :new }
-          format.json { render json: @order.errors, status: :unprocessable_entity }
-        end
+
+      if @order.save
+        render json: { status: :created, message: 'Order was successfully created.', data: @order }, status: :created
+      else
+        render json: { errors: @order.errors.full_messages }, status: :unprocessable_entity
       end
     end
-  
-    # PATCH/PUT /orders/1
+
     # PATCH/PUT /orders/1.json
     def update
-      respond_to do |format|
-        authorize @order
-        if @order.update(order_params)
-          format.html { redirect_to @order, notice: 'Order was successfully updated.' }
-          format.json { render :show, status: :ok, location: @order }
-        else
-          format.html { render :edit }
-          format.json { render json: @order.errors, status: :unprocessable_entity }
-        end
+      authorize @order
+      
+      if @order.update(order_params)
+        render json: { status: :ok, message: 'Order was successfully updated.', data: @order }, status: :ok
+      else
+        render json: { errors: @order.errors.full_messages }, status: :unprocessable_entity
       end
     end
+
   
     # DELETE /orders/1
-    # DELETE /orders/1.json
     def destroy
       authorize @order
       @order.destroy
-      respond_to do |format|
-        format.html { redirect_to orders_url, notice: 'Order was successfully destroyed.' }
-        format.json { head :no_content }
-      end
+      
+      render json: { status: :ok, message: 'Order was successfully destroyed.' }, status: :ok
     end
+
   
     private
       # Use callbacks to share common setup or constraints between actions.
@@ -74,6 +72,6 @@ class OrdersController < ApplicationController
   
       # Only allow a list of trusted parameters through.
       def order_params
-        params.require(:order).permit(:amount, :order_date, :payment_id, :customer_id, :seller_id)
+        params.require(:order).permit(:amount, :order_date, :payment_id, :customer_id, :seller_id, :product_id)
       end
   end
