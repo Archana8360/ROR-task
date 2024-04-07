@@ -19,4 +19,16 @@ class User < ApplicationRecord
     customer: 2
   }
 
+  def admin?
+    current_user.user_type == 0
+  end
+
+  def seller?
+    current_user.user_type == 1
+  end
+
+  def customer?
+    current_user.user_type == 2
+  end  
+
 end

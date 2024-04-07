@@ -16,7 +16,7 @@ gem "puma", "~> 5.0"
 # gem "jbuilder"
 
 # Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 4.0"
+gem "redis", "~> 4.0"
 
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
@@ -33,6 +33,9 @@ gem "bootsnap", require: false
 gem 'devise', '~> 4.9', '>= 4.9.3'
 gem 'devise-jwt'
 gem "roo", "~> 2.10.0"
+gem 'whenever', '~> 0.9.4'
+gem 'sidekiq', '~> 7.1', '>= 7.1.2'
+gem 'pundit'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
