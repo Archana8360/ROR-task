@@ -14,6 +14,19 @@ class OrdersController < ApplicationController
       end
     end
     
+    def search
+      @q = Order.ransack(params[:q])
+      @orders = @q.result.includes(:customer, :seller).page(params[:page]).per(10)
+      
+      if @orders.any?
+        authorize @orders
+        render json: { status: :ok, message: 'Orders found successfully', data: @orders }
+      else
+        render json: { status: :not_found, message: 'No orders found' }, status: :not_found
+      end
+    rescue => e
+      render json: { status: :unprocessable_entity, message: e.message }, status: :unprocessable_entity
+    end
   
     # GET /orders/1.json
     def show

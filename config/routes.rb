@@ -4,7 +4,11 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
   resources :products
-  resources :orders
+  resources :orders do
+    collection do
+      get 'search', to: 'orders#search'
+    end
+  end
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

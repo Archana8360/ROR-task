@@ -1,11 +1,11 @@
 class OrderPolicy < ApplicationPolicy
     def index?
       
-      user.admin? || user.seller?  # Only admins and sellers can see all orders
+      user.admin? ||  record.customer_id == user.id || record.seller_id == user.id
     end
   
     def show?
-      user.admin? || record.customer_id == user.id  # Customers can only see their own orders
+      user.admin? ||  record.customer_id == user.id || record.seller_id == user.id
     end
 
 
@@ -21,4 +21,7 @@ class OrderPolicy < ApplicationPolicy
       user.admin? 
     end
 
+    def search?
+      user.admin? ||  record.customer_id == user.id || record.seller_id == user.id
+    end
 end
