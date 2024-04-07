@@ -3,7 +3,6 @@ class CreateProducts < ActiveRecord::Migration[7.0]
     create_table :products do |t|
       t.string :name
       t.decimal :amount
-      t.references :seller, foreign_key: { to_table: :sellers }, index: true 
 
       t.timestamps
     end

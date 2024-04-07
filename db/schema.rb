@@ -51,10 +51,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_06_221659) do
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.decimal "amount"
-    t.bigint "seller_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["seller_id"], name: "index_products_on_seller_id"
   end
 
   create_table "sellers", force: :cascade do |t|
@@ -88,6 +86,5 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_06_221659) do
   add_foreign_key "orders", "customers"
   add_foreign_key "orders", "sellers"
   add_foreign_key "platform_api_calls", "users"
-  add_foreign_key "products", "sellers"
   add_foreign_key "sellers", "users"
 end
